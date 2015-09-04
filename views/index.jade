@@ -1,10 +1,15 @@
 extends layout
 
 block content
-  div.creator
-    h1 Novo teste comportamental
-    h2 Dado que estou blablalbal
-    h2 Dado que estou blablalbal
-    h2 Dado que estou blablalbal
-    h2 Dado que estou blablalbal
-    h2 Dado que estou blablalbal
+  div.creator.row
+    div.col.s12
+      h1 Novo teste comportamental
+      +step-input
+
+mixin step-input
+  .input-field.col.s12
+    select
+      option(value=given) Given
+      option When
+      option Then
+    label Ação
