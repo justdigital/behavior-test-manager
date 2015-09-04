@@ -1,4 +1,10 @@
-# behavior-test-manager
+# Gerenciador de testes comportamentais
 
+## Instalação
+TODO
 
-test
+## Utilizando
+TODO
+
+## Contribuindo
+TODO
