@@ -2,7 +2,11 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/css/materialize.min.css')
+    link(rel='stylesheet', href='/css/style.css')
+    meta(name='viewport', 
   body
-    block content
-    script(type='javascriot', src='/javascripts/jquery-2.1.4.min.js')
+    .container
+      block content
+    script(type='javascript', src='/js/jquery-2.1.4.min.js')
+    script(type='javascript', src='/js/materialize.min.js')
