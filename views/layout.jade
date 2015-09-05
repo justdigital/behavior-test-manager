@@ -7,6 +7,16 @@ html
     link(rel='stylesheet', href='/css/materialize.min.css')
     link(rel='stylesheet', href='/css/style.css')
   body
+
+    nav
+      div.nav-wrapper
+        a.brand-logo(href='/') BTM
+        ul#nav-mobile.right.hide-on-med-and-down
+          li 
+            a(href="/scenario/add") Criar BDD
+          li
+            a(href="/") Listar todos
+
     .container
       block content
     script(type='text/javascript', src='/js/jquery-2.1.4.min.js')

@@ -13,7 +13,7 @@ $(function(){
   	if(team==""){
 	  	$('.collection').load('/ .collection');
 	}else{
-	  	$('.collection').load('filter/'+team+' .collection');		
+	  	$('.collection').load('/scenario/filter/'+team+' .collection');		
 	}
 
   })
