@@ -13,15 +13,16 @@ block content
           label(for='jira-id') Jira ID:
 
       .steps
+        +step-input()(class='model')
         +step-input
       .actions
         .row
           a.waves-effect.waves-light.btn-large.col.s3.blue.disabled Exportar para Jira
           a.waves-effect.waves-light.btn-large.col.offset-s1.s3.blue.disabled Exportar para Behat
-          a.waves-effect.waves-light.btn-large.col.offset-s1.s4.green Salvar
+          a#save-scenario.waves-effect.waves-light.btn-large.col.offset-s1.s4.green Salvar
 
 mixin step-input
-  .row.step
+  .row.step&attributes(attributes)
     .input-field.col.s4
       select
         each item in moments
