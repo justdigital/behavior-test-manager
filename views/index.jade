@@ -3,13 +3,34 @@ extends layout
 block content
   div.creator.row
     div.col.s12
-      h1 Novo teste comportamental
-      +step-input
+      h1 Novo Cenário
+      .row
+        .input-field.col.s6
+          input(type='text', class='validate', id='scenario-name', name='scenario-name')
+          label(for='scenario-name') Nome:
+        .input-field.col.s6
+          input(type='text', class='validate', id='jira-id', name='jira-id')
+          label(for='jira-id') Jira ID:
+
+      .steps
+        +step-input
+      .actions
+        .row
+          a.waves-effect.waves-light.btn-large.col.s3.blue.disabled Exportar para Jira
+          a.waves-effect.waves-light.btn-large.col.offset-s1.s3.blue.disabled Exportar para Behat
+          a.waves-effect.waves-light.btn-large.col.offset-s1.s4.green Salvar
 
 mixin step-input
-  .input-field.col.s12
-    select
-      option(value=given) Given
-      option When
-      option Then
-    label Ação
+  .row.step
+    .input-field.col.s4
+      select
+        option(value='given') Given
+        option(value='given') Then
+        option(value='given') Shiet
+      label Momento
+    .input-field.col.s7
+      input(type='text', class='validate step-action', name='step-action')
+      label(for='step-action') Ação
+    .input-field.col.s1
+      .btn-floating.btn-large.waves-effec.waves-light.green
+        i.material-icons.action-button.add-step add
