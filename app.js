@@ -4,8 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
+var scenario = require('./routes/scenario');
 
 var app = express();
 
@@ -25,12 +27,13 @@ app.use(require('node-sass-middleware')({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
   indentedSyntax: true,
-  debug: true,
-  sourceMap: false
+  sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', routes);
+app.use('/scenario', scenario);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
