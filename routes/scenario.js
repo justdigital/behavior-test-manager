@@ -1,5 +1,6 @@
 var express = require('express');
 var moments = require("../lib/data/momentsprovider-mongodb.js");
+var actions = require("../lib/data/actionsprovider-mongodb.js");
 var steps = require("../lib/data/stepprovider-mongodb.js");
 var scenarios = require("../lib/data/scenarioprovider-mongodb.js");
 var router = express.Router();
@@ -15,9 +16,11 @@ router.get('/', function(req, res, next){
 
 // Scenario add form
 router.get('/add', function(req, res, next) {
-  moments.load({}, function(results){	
-    res.render('scenario/add', { title: 'scenarios index', moments: results  });
-  })
+  actions.load({}, function(actions){	
+    moments.load({}, function(moments){	
+      res.render('scenario/add', { title: 'scenarios index', moments: moments, actions: actions  });
+    });
+  });
 });
 
 // Scenario edit form
@@ -26,9 +29,11 @@ router.get('/edit/:id', function(req, res, next) {
     if (!scenarios.length || scenarios.length === 0){
       res.redirect("/scenario");
     }
-    moments.load({}, function(results){	
-      res.render('scenario/add', { title: 'scenarios index', moments: results, scenario: scenarios[0] });
-    })
+    actions.load({}, function(actions){	
+      moments.load({}, function(moments){	
+        res.render('scenario/add', { title: 'scenarios index', moments: moments, scenario: scenarios[0], actions: actions });
+      });
+    });
   });
 });
 

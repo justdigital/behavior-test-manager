@@ -29,28 +29,28 @@ block content
           i.material-icons.action-button.add-step add
       .actions
         .row
-          a.exporter.waves-effect.waves-light.btn-large.col.s3.blue.modal-trigger(href="#jira-export", data-toggle="modal", class=(!scenario) ? "disabled" : "")  Exportar para Jira
-          a.exporter.waves-effect.waves-light.btn-large.col.offset-s1.s3.blue.modal-trigger(href="#behat-export", data-toggle="modal", class=(!scenario) ? "disabled" : "") Exportar para Behat
+          a.disabled.exporter.waves-effect.waves-light.btn-large.col.s3.blue.modal-trigger#jira-export-button(href="#jira-export", data-toggle="modal")  Exportar para Jira
+          a.disabled.exporter.waves-effect.waves-light.btn-large.col.offset-s1.s3.blue.modal-trigger#behat-export-button(href="#behat-export", data-toggle="modal") Exportar para Behat
           a#save-scenario.waves-effect.waves-light.btn-large.col.offset-s1.s4.green Salvar
 
 
   div#behat-export.modal.modal-fixed-footer
     .modal-dialog
       .modal-content
-        .modal-body
+        .modal-body.exporter
           textarea.materialize-textarea#behat-export-contents
 
   div#jira-export.modal.modal-fixed-footer
     .modal-dialog
       .modal-content
-        .modal-body
+        .modal-body.exporter
           textarea.materialize-textarea#jira-export-contents
 
 
 mixin step-input(moment, action)
   .row.step&attributes(attributes)
     .input-field.col.s4
-      select
+      select.moments
         if moments
           each item in moments
             if item.en !== moment
@@ -59,8 +59,14 @@ mixin step-input(moment, action)
               option(value='#{item.en}', selected)= item.br
       label Momento
     .input-field.col.s7
-      input(type='text', class='validate step-action', name='step-action', value=action || "")
-      label(for='step-action') Ação
+      select.actions
+        if actions
+          each item in actions
+            if item.en !== action
+              option(value='#{item.en}')= item.br
+            else
+              option(value='#{item.en}', selected)= item.br
+      label Ação
     .input-field.col.s1
       if moment
         .btn-floating.btn-large.waves-effec.waves-light.red

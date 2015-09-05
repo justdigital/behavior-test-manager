@@ -48,23 +48,21 @@ router.get('/behat/:id', function(req, res, next){
 
 router.get('/jira/:id', function(req, res, next){
   var message = "";
-  moments.load({}, function(moments){
-    getScenarioById(req.params.id, function(scenario){
-      if (scenario){
-        for (var s in scenario.steps){
-          var step = scenario.steps[s];
-          var moment = translateTermToBr(step.moment, moments);
-          var actions = [{
-            en: "asdfadsfadsfa",
-            br: "sarara"
-          }];
-          var action = translateTermToBr(step.action, actions);
-          message += moment + " " + action + "\n";
+  actions.load({}, function(actions){
+    moments.load({}, function(moments){
+      getScenarioById(req.params.id, function(scenario){
+        if (scenario){
+          for (var s in scenario.steps){
+            var step = scenario.steps[s];
+            var moment = translateTermToBr(step.moment, moments);
+            var action = translateTermToBr(step.action, actions);
+            message += moment + " " + action + "\n";
+          }
+          res.json({message: message});
+        }else{
+          res.json({});
         }
-        res.json({message: message});
-      }else{
-        res.json({});
-      }
+      });
     });
   });
 });

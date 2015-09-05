@@ -7,6 +7,10 @@ var ScenarioCreate = {
     this.$stepContainer = $(".steps");
     this.$exporters = $(".exporter");
     this.id = $("#scenario-id").val() || false;
+    if (this.id){
+      this.exportTo("behat");
+      this.exportTo("jira");
+    }
     this.bindEvents();
   },
 
@@ -62,14 +66,16 @@ var ScenarioCreate = {
 
     $(".step:not(.model)").each(function(){
       var $step = $(this);
-      var moment = $step.find(".select-wrapper input[type=text]").val();
+      var moment = $step.find(".select-wrapper.moments input[type=text]").val();
+      var action = $step.find(".select-wrapper.actions input[type=text]").val();
       var step = {
-        moment: $step.find("option").filter(function(){
+        moment: $step.find(".moments option").filter(function(){
           return $(this).text() == moment; 
         }).val(),
-        action: $step.find(".step-action").val()
+        action: $step.find(".actions option").filter(function(){
+          return $(this).text() == action; 
+        }).val()
       };
-      console.log(step);
       json.steps.push(step);
     });
 
@@ -92,7 +98,6 @@ var ScenarioCreate = {
             self.exportTo("jira");
           }
           $saveButton.removeClass("disabled");
-          self.modified(false);
           self.submitting = false;
         }, 'json');
       }
@@ -101,19 +106,18 @@ var ScenarioCreate = {
 
   exportTo: function(tool){
     if (this.id){
+      var self = this;
       $.get(Globals.getBaseUrl() + '/exporter/' + tool + "/" + this.id, function(result){
         if (result && result.message){
-          $("#" + tool + "-export-contents").text(result.message);
+          $("#" + tool + "-export-contents").val(result.message);
+          self.$exporters.filter("#" + tool + "-export-button").removeClass("disabled");
         }
       });
     }
   },
   
-  modified: function(changed){
-    if (changed)
-      this.$exporters.addClass("disabled");
-    else
-      this.$exporters.removeClass("disabled");
+  modified: function(){
+    this.$exporters.addClass("disabled");
   },
 
   bindEvents: function(){
