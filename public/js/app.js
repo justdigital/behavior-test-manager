@@ -1,3 +1,3 @@
 $(function(){
-  $(".step:not(.model) select").material_select();
+  $(".step:not(.model) select, select.filter").material_select();
 });
