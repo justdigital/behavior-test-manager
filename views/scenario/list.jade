@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  div.creator.row
+    div.col.s12
+      h1 Cenários
+
+    .row
+    ul.collection.with-heade
+      each item in scenarios
+        li.collection-item 
+          span.title #{item.name}
+          p #{item.jiraId}
+            a.secondary-content(href='/scenario/edit/#{item._id}') editar     
