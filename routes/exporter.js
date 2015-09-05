@@ -1,4 +1,5 @@
 var express = require('express');
+var actions = require("../lib/data/actionsprovider-mongodb.js");
 var moments = require("../lib/data/momentsprovider-mongodb.js");
 var steps = require("../lib/data/stepprovider-mongodb.js");
 var scenarios = require("../lib/data/scenarioprovider-mongodb.js");
@@ -16,7 +17,7 @@ var getScenarioById = function(id, cb){
 };
 
 var translateTermToBr = function(en, terms){
-  var brStr = false;
+  var brStr = en;
 
   for (var t in terms){
     var term = terms[t];
@@ -33,6 +34,7 @@ router.get('/behat/:id', function(req, res, next){
   var message = "";
   getScenarioById(req.params.id, function(scenario){
     if (scenario){
+      message += "Scenario: " + scenario.name + "\n";
       for (var s in scenario.steps){
         var step = scenario.steps[s];
         message += step.moment + " " + step.action + "\n";
@@ -52,7 +54,12 @@ router.get('/jira/:id', function(req, res, next){
         for (var s in scenario.steps){
           var step = scenario.steps[s];
           var moment = translateTermToBr(step.moment, moments);
-          message += moment + " " + step.action + "\n";
+          var actions = [{
+            en: "asdfadsfadsfa",
+            br: "sarara"
+          }];
+          var action = translateTermToBr(step.action, actions);
+          message += moment + " " + action + "\n";
         }
         res.json({message: message});
       }else{

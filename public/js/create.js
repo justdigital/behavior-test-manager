@@ -89,6 +89,7 @@ var ScenarioCreate = {
             window.location.href = "/scenario/edit/" + result._id;
           }else{
             self.exportTo("behat");
+            self.exportTo("jira");
           }
           $saveButton.removeClass("disabled");
           self.modified(false);
