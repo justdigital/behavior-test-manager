@@ -1,10 +1,12 @@
 var ScenarioCreate = {
   $stepContainer: false,
   $exporters: false,
+  id: false,
 
   init: function(){
     this.$stepContainer = $(".steps");
     this.$exporters = $(".exporter");
+    this.id = $("#scenario-id").val() || false;
     this.bindEvents();
   },
 
@@ -50,8 +52,10 @@ var ScenarioCreate = {
     var json = {
       name: $("#scenario-name").val(),
       jiraId: $("#jira-id").val(),
+      _id: this.id,
       steps: [],
     };
+
 
     $(".step:not(.model)").each(function(){
       var $step = $(this);
@@ -73,7 +77,10 @@ var ScenarioCreate = {
         this.submitting = true;
         var self = this;
         $saveButton.addClass("disabled");
-        $.post('add', json, function(result){
+        $.post(Globals.getBaseUrl() + '/scenario/add', json, function(result){
+          if (result.action === "insert"){
+            window.location.href = "/scenario/edit/" + result._id;
+          }
           $saveButton.removeClass("disabled");
           self.modified(false);
           self.submitting = false;
