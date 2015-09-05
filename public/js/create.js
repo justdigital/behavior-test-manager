@@ -87,12 +87,25 @@ var ScenarioCreate = {
         $.post(Globals.getBaseUrl() + '/scenario/add', json, function(result){
           if (result.action === "insert"){
             window.location.href = "/scenario/edit/" + result._id;
+          }else{
+            self.exportTo("behat");
+            self.exportTo("jira");
           }
           $saveButton.removeClass("disabled");
           self.modified(false);
           self.submitting = false;
         }, 'json');
       }
+    }
+  },
+
+  exportTo: function(tool){
+    if (this.id){
+      $.get(Globals.getBaseUrl() + '/exporter/' + tool + "/" + this.id, function(result){
+        if (result && result.message){
+          $("#" + tool + "-export-contents").text(result.message);
+        }
+      });
     }
   },
   

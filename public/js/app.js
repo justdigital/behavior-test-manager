@@ -6,6 +6,7 @@ var Globals = {
 $(function(){
   $(".step:not(.model) select, select.filter").material_select();
 
+
   //filtrar por times
   $('.filter-team li').on('click',function(){
   	team = $('select.filter').val();
@@ -17,4 +18,5 @@ $(function(){
 
   })
 
+  $('.modal-trigger').leanModal();
 });
