@@ -1,10 +1,12 @@
 var ScenarioCreate = {
   $stepContainer: false,
   $exporters: false,
+  id: false,
 
   init: function(){
     this.$stepContainer = $(".steps");
     this.$exporters = $(".exporter");
+    this.id = $("#scenario-id").val() || false;
     this.bindEvents();
   },
 
@@ -53,12 +55,21 @@ var ScenarioCreate = {
       steps: [],
     };
 
+    if (this.id){
+      json._id = this.id;
+    }
+
+
     $(".step:not(.model)").each(function(){
       var $step = $(this);
+      var moment = $step.find(".select-wrapper input[type=text]").val();
       var step = {
-        moment: $step.find(".select-wrapper input[type=text]").val(),
+        moment: $step.find("option").filter(function(){
+          return $(this).text() == moment; 
+        }).val(),
         action: $step.find(".step-action").val()
       };
+      console.log(step);
       json.steps.push(step);
     });
 
@@ -73,7 +84,10 @@ var ScenarioCreate = {
         this.submitting = true;
         var self = this;
         $saveButton.addClass("disabled");
-        $.post('add', json, function(result){
+        $.post(Globals.getBaseUrl() + '/scenario/add', json, function(result){
+          if (result.action === "insert"){
+            window.location.href = "/scenario/edit/" + result._id;
+          }
           $saveButton.removeClass("disabled");
           self.modified(false);
           self.submitting = false;
@@ -130,7 +144,7 @@ var ScenarioCreate = {
     this
       .validateItem($("#scenario-name"), /[a-zA-Z0-9]{3,}/)
       .validateItem($("#jira-id"), /[a-zA-Z]{2,}\-[0-9]+/)
-      .validateItem($(".step:not(.model) .step-action"), /[a-zA-Z\s]{5,}/);
+      .validateItem($(".step:not(.model) .step-action"), /[a-zA-Z\-\s]{5,}/);
 
     if (!this.valid){
       Materialize.toast('Corrija os erros em vermelho!', 3000, 'red');

@@ -5,7 +5,12 @@ var scenarios = require("../lib/data/scenarioprovider-mongodb.js");
 var router = express.Router();
 var BSON = global.mongo.BSONPure;
 
-/* GET home page. */
+router.get('/', function(req, res, next){
+  scenarios.load({}, function(results){
+    res.render('scenario/list', { title: 'Gerenciador', scenarios: results });
+  });
+});
+
 router.get('/add', function(req, res, next) {
   scenarios.load({jiraId: /.*fvc.*/},function(results){	
   	console.log(results);
@@ -19,6 +24,7 @@ router.get('/edit/:id', function(req, res, next) {
       res.redirect("scenario");
     }
     moments.load(function(results){	
+      console.log(scenarios[0]);
       res.render('scenario/add', { title: 'scenarios index', moments: results, scenario: scenarios[0]  });
     })
   });

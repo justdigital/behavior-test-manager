@@ -5,7 +5,7 @@ block content
     div.col.s12
       if scenario
         h1 Editar Cenário
-        input(type='hidden', name='scenario_id', id='scenario_id', value=scenario._id)
+        input(type='hidden', name='scenario-id', id='scenario-id', value=scenario._id)
       else
         h1 Novo Cenário
       .row
@@ -13,22 +13,24 @@ block content
           input(type='text', class='validate', id='scenario-name', name='scenario-name', value=(scenario) ? scenario.name : "")
           label(for='scenario-name') Nome:
         .input-field.col.s6
-          input(type='text', class='validate', id='jira-id', name='jira-id', value=(scenario) ? scenario.name : "")
+          input(type='text', class='validate', id='jira-id', name='jira-id', value=(scenario) ? scenario.jiraId : "")
           label(for='jira-id') Jira ID:
 
       .steps
-        +step-input()(class='model')
+        +step-input('model', '')(class='model')
         if scenario && scenario.steps
           each step in scenario.steps
-            +step-input(moment=step.moment, action=step.action)
-        +step-input
+            +step-input(step.moment, step.action)
+      .more
+        .btn-floating.btn-large.waves-effec.waves-light.green.center-align
+          i.material-icons.action-button.add-step add
       .actions
         .row
           a.exporter.waves-effect.waves-light.btn-large.col.s3.blue.disabled Exportar para Jira
           a.exporter.waves-effect.waves-light.btn-large.col.offset-s1.s3.blue.disabled Exportar para Behat
           a#save-scenario.waves-effect.waves-light.btn-large.col.offset-s1.s4.green Salvar
 
-mixin step-input
+mixin step-input(moment, action)
   .row.step&attributes(attributes)
     .input-field.col.s4
       select
@@ -42,5 +44,6 @@ mixin step-input
       input(type='text', class='validate step-action', name='step-action', value=action || "")
       label(for='step-action') Ação
     .input-field.col.s1
-      .btn-floating.btn-large.waves-effec.waves-light.green
-        i.material-icons.action-button.add-step add
+      if moment
+        .btn-floating.btn-large.waves-effec.waves-light.red
+          i.material-icons.action-button.remove-step remove
