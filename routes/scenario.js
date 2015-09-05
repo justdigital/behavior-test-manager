@@ -7,10 +7,12 @@ var BSON = global.mongo.BSONPure;
 
 /* GET home page. */
 router.get('/add', function(req, res, next) {
-  moments.load(function(results){	
-    res.render('scenario/add', { title: 'scenarios index', moments: results  });
+  scenarios.load({jiraId: /.*fvc.*/},function(results){	
+  	console.log(results);
+    res.render('scenario/list', { title: 'scenarios index', scenarios: results  });
   })
 });
+
 router.get('/edit/:id', function(req, res, next) {
   scenarios.load({_id: new BSON.ObjectID(req.params.id)}, function(scenarios){
     if (!scenarios.length || scenarios.length === 0){

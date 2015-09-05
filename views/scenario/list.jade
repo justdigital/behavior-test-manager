@@ -6,6 +6,16 @@ block content
       h1 Cenários
 
     .row
+      div.col.s12.input-field
+        select.filter
+          option(value='') Escolha um time
+          option(value='fvc') FVC
+          option(value='abril') ABRIL
+          option(value='just') JUST
+    
+        label Materialize Select
+
+    .row
     ul.collection.with-heade
       each item in scenarios
         li.collection-item 
