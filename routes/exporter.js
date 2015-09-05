@@ -5,20 +5,60 @@ var scenarios = require("../lib/data/scenarioprovider-mongodb.js");
 var router = express.Router();
 var BSON = global.mongo.BSONPure;
 
-router.get('/behat/:id', function(req, res, next){
-  var message = "";
-  scenarios.load({_id: new BSON.ObjectID(req.params.id)}, function(scenarios){
+var getScenarioById = function(id, cb){
+  scenarios.load({_id: new BSON.ObjectID(id)}, function(scenarios){
     if (!scenarios.length || scenarios.length === 0){
-      res.json({});
+      cb(false);
     }
     var scenario = scenarios[0];
+    cb(scenario)
+  });
+};
 
-    for (var s in scenario.steps){
-      var step = scenario.steps[s];
-      message += step.moment + " " + step.action + "\n";
+var translateTermToBr = function(en, terms){
+  var brStr = false;
+
+  for (var t in terms){
+    var term = terms[t];
+    if (term.en === en){
+      brStr = term.br;
+      break;
     }
-    res.json({message: message});
+  }
 
+  return brStr;
+}
+
+router.get('/behat/:id', function(req, res, next){
+  var message = "";
+  getScenarioById(req.params.id, function(scenario){
+    if (scenario){
+      for (var s in scenario.steps){
+        var step = scenario.steps[s];
+        message += step.moment + " " + step.action + "\n";
+      }
+      res.json({message: message});
+    }else{
+      res.json({});
+    }
+  });
+});
+
+router.get('/jira/:id', function(req, res, next){
+  var message = "";
+  moments.load({}, function(moments){
+    getScenarioById(req.params.id, function(scenario){
+      if (scenario){
+        for (var s in scenario.steps){
+          var step = scenario.steps[s];
+          var moment = translateTermToBr(step.moment, moments);
+          message += moment + " " + step.action + "\n";
+        }
+        res.json({message: message});
+      }else{
+        res.json({});
+      }
+    });
   });
 });
 

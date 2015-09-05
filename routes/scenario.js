@@ -26,9 +26,8 @@ router.get('/edit/:id', function(req, res, next) {
     if (!scenarios.length || scenarios.length === 0){
       res.redirect("/scenario");
     }
-    moments.load(function(results){	
-      console.log(scenarios[0]);
-      res.render('scenario/add', { title: 'scenarios index', moments: results, scenario: scenarios[0]  });
+    moments.load({}, function(results){	
+      res.render('scenario/add', { title: 'scenarios index', moments: results, scenario: scenarios[0] });
     })
   });
 });
