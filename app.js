@@ -10,6 +10,7 @@ global.db = global.mongo.db('mongodb://10.0.17.34:27017/btm');
 
 var routes = require('./routes/index');
 var scenario = require('./routes/scenario');
+var exporter = require('./routes/exporter');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/scenario', scenario);
+app.use('/exporter', exporter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
