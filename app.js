@@ -7,19 +7,11 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
+var scenario = require('./routes/scenario');
 
 var app = express();
 
-
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://10.0.17.34:27017/btm');
-
-global.db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function (callback) {
-  // yay!
-  console.log('foi')
-});
+global.db = require('mongoskin').db('mongodb://10.0.17.34:27017/btm');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,12 +27,13 @@ app.use(require('node-sass-middleware')({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
   indentedSyntax: true,
-  debug: true,
-  sourceMap: false
+  sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', routes);
+app.use('/scenario', scenario);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
