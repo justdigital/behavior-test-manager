@@ -6,14 +6,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	
   moments.load(function(results){
-
-	  res.render('index', { title: 'Gerenciador', moments: results });
-  
+    res.redirect("scenario/add");
   });
-
-
 });
 /* GET users listing. */
 router.get('export/jira', function(req, res, next) {

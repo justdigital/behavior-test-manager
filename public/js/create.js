@@ -4,7 +4,7 @@ var ScenarioCreate = {
 
   init: function(){
     this.$stepContainer = $(".steps");
-    this.$exporters = $(".exporters");
+    this.$exporters = $(".exporter");
     this.bindEvents();
   },
 
@@ -69,14 +69,14 @@ var ScenarioCreate = {
     if (!this.submitting){
       var json = this.generateJSON();
       $saveButton = $("#save-scenario");
-      this.submitting = true;
       if (this.validate()){
+        this.submitting = true;
         var self = this;
         $saveButton.addClass("disabled");
-        $.post('scenario/add', json, function(result){
+        $.post('add', json, function(result){
           $saveButton.removeClass("disabled");
           self.modified(false);
-          self.submitting = true;
+          self.submitting = false;
         }, 'json');
       }
     }
