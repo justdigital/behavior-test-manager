@@ -52,17 +52,24 @@ var ScenarioCreate = {
     var json = {
       name: $("#scenario-name").val(),
       jiraId: $("#jira-id").val(),
-      _id: this.id,
       steps: [],
     };
+
+    if (this.id){
+      json._id = this.id;
+    }
 
 
     $(".step:not(.model)").each(function(){
       var $step = $(this);
+      var moment = $step.find(".select-wrapper input[type=text]").val();
       var step = {
-        moment: $step.find(".select-wrapper input[type=text]").val(),
+        moment: $step.find("option").filter(function(){
+          return $(this).text() == moment; 
+        }).val(),
         action: $step.find(".step-action").val()
       };
+      console.log(step);
       json.steps.push(step);
     });
 
@@ -137,7 +144,7 @@ var ScenarioCreate = {
     this
       .validateItem($("#scenario-name"), /[a-zA-Z0-9]{3,}/)
       .validateItem($("#jira-id"), /[a-zA-Z]{2,}\-[0-9]+/)
-      .validateItem($(".step:not(.model) .step-action"), /[a-zA-Z\s]{5,}/);
+      .validateItem($(".step:not(.model) .step-action"), /[a-zA-Z\-\s]{5,}/);
 
     if (!this.valid){
       Materialize.toast('Corrija os erros em vermelho!', 3000, 'red');
