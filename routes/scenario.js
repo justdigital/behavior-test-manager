@@ -14,6 +14,16 @@ router.get('/', function(req, res, next){
   });
 });
 
+//Scenario filter
+router.get('/filter/:team', function(req, res, next){
+  team = req.params.team
+  var regex = new RegExp(".*" + team + ".*");
+  console.log(regex)
+  scenarios.load({jiraId: regex}, function(results){
+    res.render('scenario/list', { title: 'Gerenciador', scenarios: results });
+  });
+});
+
 // Scenario add form
 router.get('/add', function(req, res, next) {
   actions.load({}, function(actions){	

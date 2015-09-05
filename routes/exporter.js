@@ -52,6 +52,7 @@ router.get('/jira/:id', function(req, res, next){
     moments.load({}, function(moments){
       getScenarioById(req.params.id, function(scenario){
         if (scenario){
+          message += "Cenário: " + scenario.name + "\n";
           for (var s in scenario.steps){
             var step = scenario.steps[s];
             var moment = translateTermToBr(step.moment, moments);

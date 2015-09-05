@@ -6,6 +6,17 @@ block content
       h1 Cenários
 
     .row
+      div.col.s12.input-field
+        select.filter.filter-team
+          option(value='') Escolha um time
+          option(value='fvc') FVC
+          option(value='abr') ABRIL
+          option(value='just') JUST
+          option(value='asd') ASD
+    
+        label Filtro por time:
+
+    .row
     ul.collection.with-heade
       each item in scenarios
         li.collection-item 
