@@ -24,9 +24,8 @@ mixin step-input
   .row.step
     .input-field.col.s4
       select
-        option(value='given') Given
-        option(value='given') Then
-        option(value='given') Shiet
+        each item in moments
+          option(value='#{item.en}')= item.br
       label Momento
     .input-field.col.s7
       input(type='text', class='validate step-action', name='step-action')

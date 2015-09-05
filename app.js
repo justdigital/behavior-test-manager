@@ -4,12 +4,22 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 
 var app = express();
 
-global.db = require('mongoskin').db('mongodb://10.0.17.34:27017/btm');
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://10.0.17.34:27017/btm');
+
+global.db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+  // yay!
+  console.log('foi')
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
