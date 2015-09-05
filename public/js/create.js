@@ -1,8 +1,10 @@
 var ScenarioCreate = {
   $stepContainer: false,
+  $exporters: false,
 
   init: function(){
     this.$stepContainer = $(".steps");
+    this.$exporters = $(".exporters");
     this.bindEvents();
   },
 
@@ -22,14 +24,15 @@ var ScenarioCreate = {
       .text("remove")
       .removeClass("green add-step")
       .addClass("red remove-step");
-      
-    this.$stepContainer.append($newStep);
-    $newInput.focus();
-    $newSelect.material_select();
     
-
-
-    // Coloca botão de remover no step clonado anteriormente
+    this.$stepContainer.append($newStep);
+    $newStep.removeClass("model");
+    $newStep.hide();
+    $newStep.slideDown(150, function(){
+      $newInput.focus();
+      $newSelect.material_select();
+    });
+    
   },
 
   isLastStep: function($step){
@@ -38,7 +41,9 @@ var ScenarioCreate = {
   },
 
   removeStep: function($step){
-    $step.remove();
+    $step.slideUp(150, function(){
+      $step.remove();
+    });
   },
 
   generateJSON: function(){
@@ -60,6 +65,29 @@ var ScenarioCreate = {
     return json;
   },
 
+  save: function(){
+    if (!this.submitting){
+      var json = this.generateJSON();
+      $saveButton = $("#save-scenario");
+      this.submitting = true;
+      if (this.validate()){
+        var self = this;
+        $saveButton.addClass("disabled");
+        $.post('scenario/add', json, function(result){
+          $saveButton.removeClass("disabled");
+          self.modified(false);
+          self.submitting = true;
+        }, 'json');
+      }
+    }
+  },
+  
+  modified: function(changed){
+    if (changed)
+      this.$exporters.addClass("disabled");
+    else
+      this.$exporters.removeClass("disabled");
+  },
 
   bindEvents: function(){
     var self = this;
@@ -77,10 +105,10 @@ var ScenarioCreate = {
         self.removeStep($step);
       })
       .on("click", '#save-scenario', function(){
-        var json = self.generateJSON();
-        if (self.validate()){
-          console.log(json);
-        }
+        self.save();
+      })
+      .on("keydown change", "input, select", function(){
+        self.modified(true);
       });
   },
 
