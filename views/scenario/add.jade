@@ -24,9 +24,19 @@ block content
         +step-input
       .actions
         .row
-          a.exporter.waves-effect.waves-light.btn-large.col.s3.blue.disabled Exportar para Jira
+          a.exporter.waves-effect.waves-light.btn-large.col.s3.blue.disabled.modal-trigger(href="#jiraExport", data-toggle="modal") Exportar para Jira
           a.exporter.waves-effect.waves-light.btn-large.col.offset-s1.s3.blue.disabled Exportar para Behat
           a#save-scenario.waves-effect.waves-light.btn-large.col.offset-s1.s4.green Salvar
+
+
+  div#jiraExport.modal.modal-fixed-footer
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal') x (NÃO FUNFA - CLIQUE FORA)
+        .modal-body
+          span RESULTADO AQUI!
+
 
 mixin step-input
   .row.step&attributes(attributes)
