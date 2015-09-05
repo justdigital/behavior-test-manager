@@ -34,17 +34,17 @@ block content
           a#save-scenario.waves-effect.waves-light.btn-large.col.offset-s1.s4.green Salvar
 
 
-  div#behat-export.modal.modal-fixed-footer
-    .modal-dialog
-      .modal-content
-        .modal-body.exporter
-          textarea.materialize-textarea#behat-export-contents
+  div#behat-export.modal.bottom-sheet
+    .modal-content
+      h4 Behat
+      .modal-body.exporter
+        textarea.materialize-textarea#behat-export-contents
 
-  div#jira-export.modal.modal-fixed-footer
-    .modal-dialog
-      .modal-content
-        .modal-body.exporter
-          textarea.materialize-textarea#jira-export-contents
+  div#jira-export.modal.bottom-sheet
+    .modal-content
+      h4 Jira
+      .modal-body.exporter
+        textarea.materialize-textarea#jira-export-contents
 
 
 mixin step-input(moment, action)
@@ -54,18 +54,18 @@ mixin step-input(moment, action)
         if moments
           each item in moments
             if item.en !== moment
-              option(value='#{item.en}')= item.br
+              option(value='#{item.en}')= item.br.replace(/\"/g, "'")
             else
-              option(value='#{item.en}', selected)= item.br
+              option(value='#{item.en}', selected)= item.br.replace(/\"/g, "'")
       label Momento
     .input-field.col.s7
       select.actions
         if actions
           each item in actions
             if item.en !== action
-              option(value='#{item.en}')= item.br
+              option(value='#{item.en}')= item.br.replace(/\"/g, "'")
             else
-              option(value='#{item.en}', selected)= item.br
+              option(value='#{item.en}', selected)= item.br.replace(/\"/g, "'")
       label Ação
     .input-field.col.s1
       if moment

@@ -35,9 +35,15 @@ router.get('/behat/:id', function(req, res, next){
   getScenarioById(req.params.id, function(scenario){
     if (scenario){
       message += "Scenario: " + scenario.name + "\n";
+      var total = scenario.steps.length;
+      var i = 0;
       for (var s in scenario.steps){
         var step = scenario.steps[s];
-        message += step.moment + " " + step.action + "\n";
+        message += step.moment + " " + step.action;
+        if (++i < total){
+          message += "\n";
+        }
+
       }
       res.json({message: message});
     }else{

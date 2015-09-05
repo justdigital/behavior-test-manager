@@ -10,12 +10,11 @@ $(function(){
   //filtrar por times
   $('.filter-team li').on('click',function(){
   	team = $('select.filter').val();
-  	if(team==""){
+  	if(!team){
 	  	$('.collection').load('/ .collection');
-	}else{
-	  	$('.collection').load('/scenario/filter/'+team+' .collection');		
-	}
-
+    }else{
+      $('.collection').load('/scenario/filter/'+team+' .collection');		
+    }
   })
 
   $('.modal-trigger').leanModal();
