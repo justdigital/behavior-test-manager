@@ -15,7 +15,7 @@ router.get('/', function(req, res, next){
 
 // Scenario add form
 router.get('/add', function(req, res, next) {
-  moments.load(function(results){	
+  moments.load({}, function(results){	
     res.render('scenario/add', { title: 'scenarios index', moments: results  });
   })
 });

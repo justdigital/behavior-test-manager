@@ -21,8 +21,9 @@ block content
         if scenario && scenario.steps
           each step in scenario.steps
             +step-input(step.moment, step.action)
-        else if !scenario
-          +step-input("a", "a")
+        else
+          +step-input("-", "")
+
       .more
         .btn-floating.btn-large.waves-effec.waves-light.green.center-align
           i.material-icons.action-button.add-step add
