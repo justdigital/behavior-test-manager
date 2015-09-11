@@ -21,12 +21,12 @@ To be a place where you can create your scenario and export this to be an artefa
 
 ## Contributing / To do List ##
 
-  1. Add an field for comments.
+  1. Add a field for comments.
   2. Place to edit actions.
 
 ## Licensing ##
 
-Copyright 2015 HulQ Framework
+Copyright 2015 Behavior Test Manager
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
