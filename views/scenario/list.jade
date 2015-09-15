@@ -8,12 +8,11 @@ block content
     .row
       div.col.s12.input-field
         select.filter.filter-team
+          #{team}
           option(value='') Escolha um time
-          option(value='fvc') FVC
-          option(value='abr') ABRIL
-          option(value='just') JUST
-          option(value='asd') ASD
-    
+          each item in team
+            option(value='#{item}')= item
+          
         label Filtro por time:
 
     .row
@@ -22,4 +21,4 @@ block content
         li.collection-item 
           span.title #{item.name}
           p #{item.jiraId}
-            a.secondary-content(href='/scenario/edit/#{item._id}') editar     
+            a.secondary-content(href='/scenario/edit/#{item._id}') editar  
