@@ -10,6 +10,7 @@ var ScenarioCreate = {
     if (this.id){
       this.exportTo("behat");
       this.exportTo("jira");
+      this.deleteScen();
     }
     this.bindEvents();
   },
@@ -104,6 +105,33 @@ var ScenarioCreate = {
     }
   },
 
+  deleteScen: function(del){
+    if (this.id){
+    
+      $.get(Globals.getBaseUrl() + '/scenario/edit/' + this.id, function(result){
+        $deleteButton = $("#delete-scenario");
+        $deleteButton.removeClass("disabled");
+        if(del){
+           console.log('truee');
+          // TO DO REQUEST POST 'DELETE' var http = require('http');
+          // var options = {
+          //   hostname: '127.0.0.1',
+          //   port: 3000,
+          //   path: '/scenario/edit/' + this.id,
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/x-www-form-urlencoded'
+          //   }
+          // };
+          // var req = http.request(options, function(res) {
+          //   console.log('STATUS: ' + res.statusCode);
+          // });
+        }
+      });
+    }
+    
+  },
+
   exportTo: function(tool){
     if (this.id){
       var self = this;
@@ -137,6 +165,10 @@ var ScenarioCreate = {
       })
       .on("click", '#save-scenario', function(){
         self.save();
+      })
+      .on("click", '#delete-scenario', function(){
+        var del = true;
+        self.deleteScen(del);
       })
       .on("keydown change", "input, select", function(){
         self.modified(true);

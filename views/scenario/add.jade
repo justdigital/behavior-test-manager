@@ -31,7 +31,13 @@ block content
         .row
           a.disabled.exporter.waves-effect.waves-light.btn-large.col.s3.blue.modal-trigger#jira-export-button(href="#jira-export", data-toggle="modal")  Exportar para Jira
           a.disabled.exporter.waves-effect.waves-light.btn-large.col.offset-s1.s3.blue.modal-trigger#behat-export-button(href="#behat-export", data-toggle="modal") Exportar para Behat
-          a#save-scenario.waves-effect.waves-light.btn-large.col.offset-s1.s4.green Salvar
+          a#save-scenario.waves-effect.waves-light.btn-large.col.offset-s1.s2.green Salvar
+          if scenario
+           - var path = "/scenario/edit/"+scenario._id+"/delete"
+          else
+           - var path = '#'
+          a.disabled#delete-scenario.waves-effect.waves-light.btn-large.col.s2.red(href="#{path}") Apagar
+          
 
 
   div#behat-export.modal.bottom-sheet

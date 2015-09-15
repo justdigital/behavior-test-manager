@@ -10,7 +10,16 @@ var BSON = global.mongo.BSONPure;
 // Scenario list
 router.get('/', function(req, res, next){
   scenarios.load({}, function(results){
-    res.render('scenario/list', { title: 'Gerenciador', scenarios: results });
+    var team = [];
+
+    for (var item in results){
+      var resItem = results[item].jiraId.replace(/\-[0-9]+/g , "");
+
+      if(team.indexOf(resItem) == -1 ){
+        team.push(resItem);
+      }
+    }
+    res.render('scenario/list', { title: 'Gerenciador', scenarios: results, team: team });
   });
 });
 
@@ -53,6 +62,15 @@ router.post('/add', function(req, res, next) {
     res.json(results);
 	})
 
+});
+
+// Scenario delete 
+router.get('/edit/:id/delete', function(req, res) {
+  scenarios.destroy(req.params.id, function(result){
+    if(result){
+      res.redirect("/scenario");
+    }  
+  })
 });
 
 module.exports = router;
